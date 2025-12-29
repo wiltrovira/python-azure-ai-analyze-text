@@ -33,32 +33,42 @@ def main():
             "Reviews Folder:", reviews_folder
         )  # Print the reviews folder path for debugging
 
-        for file_path in reviews_folder.iterdir():
+        for (
+            file_path
+        ) in (
+            reviews_folder.iterdir()
+        ):  # Iterate through each file in the reviews folder
             # Read the file contents
-            if file_path.is_file():
+            if file_path.is_file():  # Ensure it's a file
                 print("\n-------------\n" + file_path.name)
-                text = file_path.read_text(encoding="utf8")
+                text = file_path.read_text(encoding="utf8")  # Read the file content
                 print("\n" + text)
 
                 # Get language
-                detectedLanguage = cog_client.detect_language(documents=[text])[0]
+                detectedLanguage = cog_client.detect_language(documents=[text])[
+                    0
+                ]  # detect language
                 print("\nLanguage: {}".format(detectedLanguage.primary_language.name))
 
                 # Get sentiment
-                sentimentAnalysis = cog_client.analyze_sentiment(documents=[text])[0]
+                sentimentAnalysis = cog_client.analyze_sentiment(documents=[text])[
+                    0
+                ]  # analyze sentiment
                 print("\nSentiment: {}".format(sentimentAnalysis.sentiment))
 
                 # Get key phrases
                 phrases = cog_client.extract_key_phrases(documents=[text])[
                     0
-                ].key_phrases
+                ].key_phrases  # extract key phrases
                 if len(phrases) > 0:
                     print("\nKey Phrases:")
                     for phrase in phrases:
                         print("\t{}".format(phrase))
 
                 # Get entities
-                entities = cog_client.recognize_entities(documents=[text])[0].entities
+                entities = cog_client.recognize_entities(documents=[text])[
+                    0
+                ].entities  # recognize entities
                 if len(entities) > 0:
                     print("\nEntities")
                     for entity in entities:
@@ -67,7 +77,7 @@ def main():
                 # Get linked entities
                 entities = cog_client.recognize_linked_entities(documents=[text])[
                     0
-                ].entities
+                ].entities  # recognize linked entities
                 if len(entities) > 0:
                     print("\nLinks")
                     for linked_entity in entities:
